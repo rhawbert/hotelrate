@@ -24,6 +24,21 @@ def gen_severity():
     }
 
 
+def gen_category():
+    mapping = {
+        1: 'Cleanliness',
+        2: 'Organizational',
+        3: 'Legal',
+        4: 'Health',
+        5: 'Staff'
+    }
+    key = choice(list(mapping.keys()))
+    return {
+        'id': key,
+        'description': mapping[key]
+    }
+
+
 def gen_where():
     where = ('room', 'suite', 'penthouse', 'hall', 'lobby', 'kitchen')
     output = choice(where)
@@ -244,6 +259,8 @@ def gen_rules():
         yield {
             'number': index,
             'description': rule,
+            'category': gen_category(),
+            'severity': gen_severity(),
             'total_issues': issues,
             'issues': [gen_issue(i) for i in range(1, issues + 1)]
         }
@@ -253,8 +270,8 @@ def gen_issue(num):
     return {
         'number': num,
         'where': gen_where(),
-        'what': choice(WHAT),
-        'severity': gen_severity()
+        'what': choice(WHAT)
+        #'severity': gen_severity()
     }
 
 
